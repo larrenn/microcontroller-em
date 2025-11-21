@@ -1,9 +1,8 @@
 @echo off
 chcp 65001
 echo ================================
-echo    MICROCONTROLLER EMULATOR
+echo    RUN NETWORK EMULATOR
 echo ================================
 echo.
-echo Starting Renode...
-renode scripts\microcontroller.resc
+renode scripts\network.resc
 pause

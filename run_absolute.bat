@@ -1,9 +1,9 @@
 @echo off
 chcp 65001
 echo ================================
-echo    MICROCONTROLLER EMULATOR
+echo    ABSOLUTE PATH
 echo ================================
 echo.
-echo Starting Renode...
-renode scripts\microcontroller.resc
+cd C:\Users\Student\Desktop\microcontroller-emulator
+renode emulator.resc
 pause

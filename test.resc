@@ -1,0 +1,5 @@
+# TEST
+using sysbus
+mach create "T"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+start

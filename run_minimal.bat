@@ -1,9 +1,8 @@
 @echo off
 chcp 65001
 echo ================================
-echo    MICROCONTROLLER EMULATOR
+echo    RUN MINIMAL
 echo ================================
 echo.
-echo Starting Renode...
-renode scripts\microcontroller.resc
+renode minimal.resc
 pause

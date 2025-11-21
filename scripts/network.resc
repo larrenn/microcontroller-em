@@ -1,0 +1,13 @@
+# NETWORK EMULATOR
+using sysbus
+
+mach create "NetworkBoard"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+
+showAnalyzer sysbus.usart1
+logNetwork 1234
+
+sysbus WriteDoubleWord 0x08000000 0x20001000
+sysbus WriteDoubleWord 0x08000004 0x08000100
+
+start

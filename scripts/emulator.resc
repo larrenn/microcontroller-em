@@ -1,0 +1,29 @@
+# MAIN EMULATOR
+using sysbus
+
+echo "Starting STM32F4 Emulator"
+
+mach create "STM32Board"
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+
+showAnalyzer sysbus.usart1
+logNetwork 1234
+
+echo "Loading firmware..."
+$code = @"
+.section .text
+_start:
+    ldr sp, =0x20020000
+    ldr r0, =msg
+loop:
+    ldrb r1, [r0], #1
+    cmp r1, #0
+    beq loop
+    b loop
+msg: .asciz "STM32F4 Emulator Ready\r\nNetwork: 1234\r\n\r\n"
+"@
+
+sysbus WriteBinary $code 0x08000000
+
+echo "Emulator starting..."
+start
