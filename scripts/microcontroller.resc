@@ -1,0 +1,93 @@
+# РАБОЧИЙ ЭМУЛЯТОР МИКРОКОНТРОЛЛЕРА
+using sysbus
+
+echo "=== ЗАПУСК ЭМУЛЯТОРА МК ==="
+
+# Создаем виртуальную машину
+mach create "NetworkedMCU"
+
+# Загружаем платформу STM32F4
+machine LoadPlatformDescription @platforms/cpus/stm32f4.repl
+
+echo "Платформа загружена"
+
+# Настраиваем UART для отладки
+showAnalyzer sysbus.usart1
+echo "UART анализатор подключен"
+
+# Настраиваем сетевой сервер
+echo "Настраиваю сетевой сервер на порту 1234..."
+network_server start 1234
+echo "Сетевой сервер запущен"
+
+# Подключаем Ethernet к серверу
+connector Connect sysbus.ethernet network_server
+echo "Ethernet подключен к серверу"
+
+echo "Загружаю прошивку микроконтроллера..."
+$firmware_code = @"
+.section .text
+.global _start
+_start:
+    // Инициализация стека
+    ldr sp, =0x20020000
+    
+    // Вывод приветственного сообщения
+    ldr r0, =welcome_message
+    bl uart_send
+    
+    // Основной рабочий цикл
+main_loop:
+    // Отправка данных в сеть
+    ldr r0, =network_data
+    bl uart_send
+    
+    // Задержка
+    ldr r1, =1500000
+delay:
+    subs r1, r1, #1
+    bne delay
+    
+    b main_loop
+
+// Функция отправки данных через UART
+uart_send:
+    ldr r2, =0x40011004  // USART1 Data Register
+send_loop:
+    ldrb r3, [r0], #1    // Загружаем байт
+    cmp r3, #0           // Проверяем конец строки
+    beq send_done
+    str r3, [r2]         // Отправляем в UART
+    b send_loop
+send_done:
+    bx lr
+
+// Текстовые сообщения
+welcome_message:
+    .asciz "=========================================\r\n"
+    .asciz "   ЭМУЛЯТОР МИКРОКОНТРОЛЛЕРА STM32F4\r\n"
+    .asciz "=========================================\r\n"
+    .asciz "Статус: РАБОТАЕТ\r\n"
+    .asciz "Сетевой порт: 1234\r\n"
+    .asciz "Готов к подключениям...\r\n"
+    .asciz "=========================================\r\n\r\n"
+
+network_data:
+    .asciz "[СЕТЬ] Данные от микроконтроллера\r\n"
+"@
+
+# Записываем прошивку в память
+sysbus WriteBinary $firmware_code 0x08000000
+sysbus WriteDoubleWord 0x08000004 0x08000009
+
+echo ""
+echo "=== КОНФИГУРАЦИЯ ЗАВЕРШЕНА ==="
+echo "Микроконтроллер: STM32F407"
+echo "Сетевой порт: 1234"
+echo "Для подключения: telnet localhost 1234"
+echo "=============================="
+echo ""
+
+# Запускаем эмуляцию
+start
+echo "Эмулятор запущен и работает!"

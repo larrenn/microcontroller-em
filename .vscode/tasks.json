@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Запустить эмулятор Renode",
+            "type": "shell",
+            "command": "renode",
+            "args": [
+                "scripts/microcontroller.resc"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "new",
+                "focus": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Запустить Renode с консолью",
+            "type": "shell",
+            "command": "renode",
+            "args": [
+                "--console",
+                "scripts/microcontroller.resc"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}

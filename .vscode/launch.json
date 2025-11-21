@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Запуск эмулятора Renode",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "renode",
+            "args": [
+                "scripts/microcontroller.resc"
+            ],
+            "console": "externalTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
