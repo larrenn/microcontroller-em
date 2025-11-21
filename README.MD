@@ -79,7 +79,7 @@ microcontroller-emulator/
 4.1. Создание конфигурационного файла
 Действие: Откройте папку scripts
 
-Действие: Создайте файл: working_emulator.resc
+Действие: Создайте файл:  microcontroller.resc
 
 Действие: Скопируйте содержимое из соответствующего файла в репозитории
 
@@ -161,7 +161,7 @@ microcontroller-emulator/
 
 cmd
 cd Desktop\microcontroller-emulator
-renode scripts\working_emulator.resc
+renode scripts\ microcontroller.resc
 Способ 3: Через bat-файл
 Действие: Дважды щелкните на файл start_emulator.bat в корне проекта
 
@@ -215,7 +215,7 @@ renode --version
 Проблема: Файл не найден
 Решение:
 
-Убедитесь что файл scripts/working_emulator.resc существует
+Убедитесь что файл scripts/microcontroller.resc существует
 
 Проверьте правильность путей в tasks.json
 
@@ -240,7 +240,7 @@ microcontroller-emulator/
 │   └── src/
 │       └── main.c          # Основная прошивка МК
 ├── scripts/                # Скрипты для Renode
-│   └── working_emulator.resc # Основная конфигурация
+│   └──  microcontroller.resc # Основная конфигурация
 ├── docs/                   # Документация
 ├── start_emulator.bat      # Скрипт для запуска
 ├── .gitignore             # Игнорируемые файлы Git
@@ -250,14 +250,14 @@ microcontroller-emulator/
 Изменение сетевого порта
 Если порт 1234 занят, измените его в файлах:
 
-scripts/working_emulator.resc - строка network_server start 1234
+scripts/microcontroller.resc - строка network_server start 1234
 
 Правила брандмауэра для нового порта
 
 Команды telnet с указанием нового порта
 
 Использование другого микроконтроллера
-В файле working_emulator.resc можно изменить платформу:
+В файле microcontroller.resc можно изменить платформу:
 
 python
 machine LoadPlatformDescription @platforms/cpus/имя_платформы.repl

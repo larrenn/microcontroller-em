@@ -8,7 +8,10 @@
             "args": [
                 "scripts/microcontroller.resc"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -16,21 +19,6 @@
                 "focus": false
             },
             "problemMatcher": []
-        },
-        {
-            "label": "Запустить Renode с консолью",
-            "type": "shell",
-            "command": "renode",
-            "args": [
-                "--console",
-                "scripts/microcontroller.resc"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "panel": "new"
-            }
         }
     ]
 }

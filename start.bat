@@ -1,8 +1,9 @@
 @echo off
 chcp 65001
 echo =================================
-echo  Запуск эмулятора микроконтроллера
+echo    ЗАПУСК ЭМУЛЯТОРА МК
 echo =================================
-cd /d "%~dp0"
+echo.
+echo Запуск Renode...
 renode scripts\microcontroller.resc
 pause
